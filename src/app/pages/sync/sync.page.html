@@ -1,0 +1,15 @@
+<ion-header><ion-toolbar><ion-title>Sync</ion-title></ion-toolbar></ion-header>
+<ion-content>
+  <div class="page-container">
+    <ion-card>
+      <ion-card-content>
+        <h1>Data Synchronization</h1>
+        <p>{{ status }}</p>
+        <ion-button expand="block" (click)="sync()">
+          <ion-icon slot="start" name="sync-outline"></ion-icon>
+          Synchronize Now
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
