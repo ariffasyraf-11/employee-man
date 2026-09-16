@@ -4,23 +4,26 @@
 
 <ion-content>
   <div class="page-container">
-    <ion-searchbar [(ngModel)]="search" placeholder="Search name, ID, position..."></ion-searchbar>
-    <ion-select [(ngModel)]="department" label="Department" interface="popover">
-      <ion-select-option value="All">All departments</ion-select-option>
-      <ion-select-option *ngFor="let item of departments" [value]="item">{{ item }}</ion-select-option>
+    <ion-searchbar [(ngModel)]="search" (ionInput)="onSearch()" placeholder="Search name, ID, position..."></ion-searchbar>
+    <ion-select [(ngModel)]="departmentId" (ionChange)="onDepartmentChange()" label="Department" interface="popover">
+      <ion-select-option [value]="undefined">All departments</ion-select-option>
+      <ion-select-option *ngFor="let item of departments" [value]="item.id">{{ item.name }}</ion-select-option>
     </ion-select>
 
-    <ion-list inset="true">
-      <ion-item *ngFor="let employee of filteredEmployees" [routerLink]="['/employees', employee.id]" detail="true">
+    <p *ngIf="error">{{ error }}</p>
+    <p *ngIf="loading">Loading employees...</p>
+
+    <ion-list inset="true" *ngIf="!loading">
+      <ion-item *ngFor="let employee of employees" [routerLink]="['/employees', employee.id]" detail="true">
         <ion-label>
           <h2>{{ employee.name }}</h2>
-          <p>{{ employee.employeeId }} · {{ employee.position }}</p>
-          <p>{{ employee.department }} · {{ employee.unit }}</p>
+          <p>{{ employee.employee_no }} · {{ employee.position }}</p>
+          <p>{{ employee.department.name }}</p>
         </ion-label>
-        <ion-badge slot="end" [color]="employee.status === 'Active' ? 'success' : 'medium'">{{ employee.status }}</ion-badge>
+        <ion-badge slot="end" [color]="employee.status ? 'success' : 'medium'">{{ employee.status ? 'Active' : 'Inactive' }}</ion-badge>
       </ion-item>
     </ion-list>
 
-    <p *ngIf="filteredEmployees.length === 0">No employees found.</p>
+    <p *ngIf="!loading && !error && employees.length === 0">No employees found.</p>
   </div>
 </ion-content>

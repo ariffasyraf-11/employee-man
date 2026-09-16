@@ -15,10 +15,25 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class DashboardPage {
   private readonly employeeService = inject(EmployeeService);
-  readonly employees = this.employeeService.getEmployees();
-  readonly departments = this.employeeService.getDepartments();
+
+  totalEmployees = 0;
+  totalDepartments = 0;
+  loading = true;
+  error = '';
 
   constructor() {
     addIcons({ peopleOutline, businessOutline, syncOutline });
+
+    this.employeeService.getDashboard().subscribe({
+      next: (response) => {
+        this.totalEmployees = response.data.total_employees;
+        this.totalDepartments = response.data.total_departments;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Unable to load dashboard data.';
+        this.loading = false;
+      }
+    });
   }
 }

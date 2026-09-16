@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonSearchbar, IonList, IonItem, IonLabel, IonBadge, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { EmployeeService } from '../../services/employee.service';
+import { Department, Employee } from '../../models/employee.model';
 
 @Component({
   selector: 'app-employees',
@@ -14,17 +15,47 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class EmployeesPage {
   private readonly employeeService = inject(EmployeeService);
-  readonly employees = this.employeeService.getEmployees();
-  readonly departments = this.employeeService.getDepartments();
-  search = '';
-  department = 'All';
 
-  get filteredEmployees() {
-    const term = this.search.trim().toLowerCase();
-    return this.employees.filter((employee) => {
-      const matchesSearch = !term || [employee.name, employee.employeeId, employee.position, employee.department].some((value) => value.toLowerCase().includes(term));
-      const matchesDepartment = this.department === 'All' || employee.department === this.department;
-      return matchesSearch && matchesDepartment;
+  employees: Employee[] = [];
+  departments: Department[] = [];
+  search = '';
+  departmentId?: number;
+  loading = false;
+  error = '';
+
+  constructor() {
+    this.loadDepartments();
+    this.loadEmployees();
+  }
+
+  loadEmployees(): void {
+    this.loading = true;
+    this.error = '';
+
+    this.employeeService.getEmployees(this.search, this.departmentId).subscribe({
+      next: (response) => {
+        this.employees = response.data.data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Unable to load employees. Make sure the Laravel API is running.';
+        this.loading = false;
+      }
     });
+  }
+
+  loadDepartments(): void {
+    this.employeeService.getDepartments().subscribe({
+      next: (response) => this.departments = response.data,
+      error: () => this.error = 'Unable to load departments.'
+    });
+  }
+
+  onSearch(): void {
+    this.loadEmployees();
+  }
+
+  onDepartmentChange(): void {
+    this.loadEmployees();
   }
 }

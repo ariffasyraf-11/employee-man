@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonBadge } from '@ionic/angular/standalone';
 import { EmployeeService } from '../../services/employee.service';
+import { Department } from '../../models/employee.model';
 
 @Component({
   selector: 'app-departments',
@@ -12,10 +13,20 @@ import { EmployeeService } from '../../services/employee.service';
 })
 export class DepartmentsPage {
   private readonly employeeService = inject(EmployeeService);
-  readonly employees = this.employeeService.getEmployees();
-  readonly departments = this.employeeService.getDepartments();
+  departments: Department[] = [];
+  loading = true;
+  error = '';
 
-  count(department: string): number {
-    return this.employees.filter((employee) => employee.department === department).length;
+  constructor() {
+    this.employeeService.getDepartments().subscribe({
+      next: (response) => {
+        this.departments = response.data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Unable to load departments.';
+        this.loading = false;
+      }
+    });
   }
 }

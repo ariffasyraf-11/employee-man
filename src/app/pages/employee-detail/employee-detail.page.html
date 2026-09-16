@@ -6,19 +6,22 @@
 </ion-header>
 
 <ion-content>
-  <div class="page-container" *ngIf="employee; else notFound">
+  <div class="page-container" *ngIf="employee; else state">
     <h1>{{ employee.name }}</h1>
     <p>{{ employee.position }}</p>
     <ion-list inset="true">
-      <ion-item><ion-label><strong>Employee ID</strong><p>{{ employee.employeeId }}</p></ion-label></ion-item>
-      <ion-item><ion-label><strong>Department</strong><p>{{ employee.department }}</p></ion-label></ion-item>
-      <ion-item><ion-label><strong>Unit</strong><p>{{ employee.unit }}</p></ion-label></ion-item>
-      <ion-item><ion-label><strong>Email</strong><p>{{ employee.email }}</p></ion-label></ion-item>
-      <ion-item><ion-label><strong>Phone</strong><p>{{ employee.phone }}</p></ion-label></ion-item>
-      <ion-item><ion-label><strong>Office</strong><p>{{ employee.officeLocation }}</p></ion-label></ion-item>
-      <ion-item><ion-label><strong>Status</strong><p>{{ employee.status }}</p></ion-label></ion-item>
+      <ion-item><ion-label><strong>Employee ID</strong><p>{{ employee.employee_no }}</p></ion-label></ion-item>
+      <ion-item><ion-label><strong>Department</strong><p>{{ employee.department.name }}</p></ion-label></ion-item>
+      <ion-item><ion-label><strong>Email</strong><p>{{ employee.email || '-' }}</p></ion-label></ion-item>
+      <ion-item><ion-label><strong>Phone</strong><p>{{ employee.phone || '-' }}</p></ion-label></ion-item>
+      <ion-item><ion-label><strong>Status</strong><p>{{ employee.status ? 'Active' : 'Inactive' }}</p></ion-label></ion-item>
     </ion-list>
   </div>
 
-  <ng-template #notFound><div class="page-container"><h2>Employee not found</h2></div></ng-template>
+  <ng-template #state>
+    <div class="page-container">
+      <p *ngIf="loading">Loading employee...</p>
+      <h2 *ngIf="!loading">{{ error || 'Employee not found' }}</h2>
+    </div>
+  </ng-template>
 </ion-content>

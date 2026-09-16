@@ -13,17 +13,20 @@
       <ion-card>
         <ion-card-content>
           <ion-icon name="people-outline"></ion-icon>
-          <div><strong>{{ employees.length }}</strong><span>Employees</span></div>
+          <div><strong>{{ totalEmployees }}</strong><span>Employees</span></div>
         </ion-card-content>
       </ion-card>
 
       <ion-card>
         <ion-card-content>
           <ion-icon name="business-outline"></ion-icon>
-          <div><strong>{{ departments.length }}</strong><span>Departments</span></div>
+          <div><strong>{{ totalDepartments }}</strong><span>Departments</span></div>
         </ion-card-content>
       </ion-card>
     </div>
+
+    <p *ngIf="loading">Loading dashboard...</p>
+    <p *ngIf="error">{{ error }}</p>
 
     <ion-card>
       <ion-card-content>

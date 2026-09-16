@@ -1,13 +1,31 @@
 export interface Employee {
   id: number;
-  employeeId: string;
+  employee_no: string;
   name: string;
-  position: string;
-  department: string;
-  unit: string;
-  email: string;
-  phone: string;
-  officeLocation: string;
-  status: 'Active' | 'Inactive';
-  photo?: string;
+  email: string | null;
+  phone: string | null;
+  position: string | null;
+  photo: string | null;
+  status: boolean;
+  department_id: number;
+  department: Department;
+}
+
+export interface Department {
+  id: number;
+  name: string;
+  description: string | null;
+}
+
+export interface PaginatedResponse<T> {
+  current_page: number;
+  data: T[];
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+export interface DashboardStats {
+  total_employees: number;
+  total_departments: number;
 }

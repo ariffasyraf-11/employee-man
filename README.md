@@ -2,12 +2,10 @@
 
 Prototype **Employee Directory App** built with Ionic + Angular + Capacitor.
 
-## Planned architecture
+## Architecture
 
 ```text
 Ionic + Angular mobile app
-        |
-        +--> SQLite local storage
         |
         +--> REST / JSON API
                   |
@@ -16,17 +14,16 @@ Ionic + Angular mobile app
                 MySQL
 ```
 
+SQLite remains planned for the offline-first phase.
+
 ## Prototype features
 
 - Employee directory
-- Search employees
-- Department filtering
-- Employee profile/details
-- Dashboard statistics
-- Mock data for offline-first development
-- SQLite-ready data service abstraction
-- Laravel API integration placeholder
-- Sync status placeholder
+- Search employees through the Laravel API
+- Department filtering through the Laravel API
+- Employee profile/details from the Laravel API
+- Dashboard statistics from the Laravel API
+- SQLite-ready sync screen for a future offline-first phase
 
 ## Stack
 
@@ -34,9 +31,9 @@ Ionic + Angular mobile app
 - Angular
 - TypeScript
 - Capacitor
-- SQLite (planned integration)
-- Laravel REST API (planned)
-- MySQL (planned)
+- Laravel 12 REST API
+- MySQL
+- SQLite (planned)
 
 ## Getting started
 
@@ -52,8 +49,22 @@ Run the web prototype:
 npm run start
 ```
 
-For an actual Ionic CLI workflow, install the Ionic CLI and use the standard Capacitor Android/iOS commands.
+The frontend expects the Laravel API at:
+
+```text
+http://localhost:8000/api
+```
+
+Start the Laravel backend separately with its normal development command.
 
 ## Project status
 
-This repository is an early prototype. Authentication, real SQLite persistence, Laravel API endpoints, and production synchronization are intentionally left as the next development stages.
+Phase 1: Laravel + MySQL schema and seed data — complete.
+
+Phase 2: Laravel REST API — complete.
+
+Phase 3: Ionic + Angular connected to Laravel API — in progress.
+
+Phase 4: SQLite offline storage and synchronization — planned.
+
+Phase 5: Authentication and production hardening — planned.
