@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Employee Man</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-container">
+    <h1>Dashboard</h1>
+    <p>Employee Directory prototype</p>
+
+    <div class="stats-grid">
+      <ion-card>
+        <ion-card-content>
+          <ion-icon name="people-outline"></ion-icon>
+          <div><strong>{{ employees.length }}</strong><span>Employees</span></div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-icon name="business-outline"></ion-icon>
+          <div><strong>{{ departments.length }}</strong><span>Departments</span></div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <ion-card>
+      <ion-card-content>
+        <h2>Quick Actions</h2>
+        <ion-button expand="block" routerLink="/employees">View Employees</ion-button>
+        <ion-button expand="block" fill="outline" routerLink="/sync">
+          <ion-icon slot="start" name="sync-outline"></ion-icon>
+          Sync Data
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
